@@ -439,13 +439,13 @@ var paddingOptions = [{
   value: ""
 }, {
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)("Small", "wp-bootstrap-blocks"),
-  value: "p-1 p-md-2"
+  value: "p-2"
 }, {
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)("Medium", "wp-bootstrap-blocks"),
-  value: "p-1 p-md-3"
+  value: "p-3"
 }, {
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_9__.__)("Large", "wp-bootstrap-blocks"),
-  value: "p-1 p-md-5"
+  value: "p-5"
 }];
 paddingOptions = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_13__.applyFilters)("wpBootstrapBlocks.column.paddingOptions", paddingOptions);
 
