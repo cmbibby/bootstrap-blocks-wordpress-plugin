@@ -1,26 +1,26 @@
 // WordPress dependencies
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 import {
 	CheckboxControl,
 	ColorPalette,
 	PanelBody,
 	RangeControl,
 	SelectControl,
-} from '@wordpress/components';
-import { Component, Fragment } from '@wordpress/element';
-import { withSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
-import { applyFilters } from '@wordpress/hooks';
+} from "@wordpress/components";
+import { Component, Fragment } from "@wordpress/element";
+import { withSelect } from "@wordpress/data";
+import { compose } from "@wordpress/compose";
+import { applyFilters } from "@wordpress/hooks";
 
-import * as BlockEditor from '@wordpress/block-editor';
-import * as Editor from '@wordpress/editor';
+import * as BlockEditor from "@wordpress/block-editor";
+import * as Editor from "@wordpress/editor";
 
-import { isBootstrap5Active, isCssGridEnabled } from '../helper';
+import { isBootstrap5Active, isCssGridEnabled } from "../helper";
 import {
 	verticalAlignBottom,
 	verticalAlignCenter,
 	verticalAlignTop,
-} from '../icons';
+} from "../icons";
 
 const { InnerBlocks, InspectorControls, BlockControls, AlignmentToolbar } =
 	BlockEditor || Editor; // Fallback to deprecated '@wordpress/editor' for backwards compatibility
@@ -28,63 +28,63 @@ const { InnerBlocks, InspectorControls, BlockControls, AlignmentToolbar } =
 const contentVerticalAlignmentControls = [
 	{
 		icon: verticalAlignTop,
-		title: __( 'Align content top', 'wp-bootstrap-blocks' ),
-		align: 'top',
+		title: __("Align content top", "wp-bootstrap-blocks"),
+		align: "top",
 	},
 	{
 		icon: verticalAlignCenter,
-		title: __( 'Align content center', 'wp-bootstrap-blocks' ),
-		align: 'center',
+		title: __("Align content center", "wp-bootstrap-blocks"),
+		align: "center",
 	},
 	{
 		icon: verticalAlignBottom,
-		title: __( 'Align content bottom', 'wp-bootstrap-blocks' ),
-		align: 'bottom',
+		title: __("Align content bottom", "wp-bootstrap-blocks"),
+		align: "bottom",
 	},
 ];
 
-const ColumnSizeRangeControl = ( {
+const ColumnSizeRangeControl = ({
 	label,
 	attributeName,
 	value,
 	setAttributes,
 	...props
-} ) => {
+}) => {
 	return (
 		<RangeControl
-			label={ label }
-			value={ value }
-			onChange={ ( selectedSize ) => {
-				setAttributes( {
-					[ attributeName ]: selectedSize,
-				} );
-			} }
-			min={ 0 }
-			max={ 12 }
-			{ ...props }
+			label={label}
+			value={value}
+			onChange={(selectedSize) => {
+				setAttributes({
+					[attributeName]: selectedSize,
+				});
+			}}
+			min={0}
+			max={12}
+			{...props}
 		/>
 	);
 };
 
 export let bgColorOptions = [
-	{ name: 'primary', color: '#007bff' },
-	{ name: 'secondary', color: '#6c757d' },
+	{ name: "primary", color: "#007bff" },
+	{ name: "secondary", color: "#6c757d" },
 ];
 
 bgColorOptions = applyFilters(
-	'wpBootstrapBlocks.column.bgColorOptions',
+	"wpBootstrapBlocks.column.bgColorOptions",
 	bgColorOptions
 );
 
 let paddingOptions = [
-	{ label: __( 'None', 'wp-bootstrap-blocks' ), value: '' },
-	{ label: __( 'Small', 'wp-bootstrap-blocks' ), value: 'p-2' },
-	{ label: __( 'Medium', 'wp-bootstrap-blocks' ), value: 'p-3' },
-	{ label: __( 'Large', 'wp-bootstrap-blocks' ), value: 'p-5' },
+	{ label: __("None", "wp-bootstrap-blocks"), value: "" },
+	{ label: __("Small", "wp-bootstrap-blocks"), value: "p-1 p-md-2" },
+	{ label: __("Medium", "wp-bootstrap-blocks"), value: "p-1 p-md-3" },
+	{ label: __("Large", "wp-bootstrap-blocks"), value: "p-1 p-md-5" },
 ];
 
 paddingOptions = applyFilters(
-	'wpBootstrapBlocks.column.paddingOptions',
+	"wpBootstrapBlocks.column.paddingOptions",
 	paddingOptions
 );
 
@@ -116,232 +116,214 @@ class BootstrapColumnEdit extends Component {
 		} = attributes;
 
 		// Migrate deprecated centerContent to new contentVerticalAlignment attribute
-		if ( centerContent ) {
-			setAttributes( {
-				contentVerticalAlignment: 'center',
+		if (centerContent) {
+			setAttributes({
+				contentVerticalAlignment: "center",
 				centerContent: false,
-			} );
+			});
 		}
 
 		return (
 			<Fragment>
 				<InspectorControls>
 					<PanelBody
-						title={ __( 'Column size', 'wp-bootstrap-blocks' ) }
-						initialOpen={ false }
+						title={__("Column size", "wp-bootstrap-blocks")}
+						initialOpen={false}
 					>
 						<ColumnSizeRangeControl
-							label={ __(
-								'Xs Column count',
-								'wp-bootstrap-blocks'
-							) }
+							label={__("Xs Column count", "wp-bootstrap-blocks")}
 							attributeName="sizeXs"
-							value={ sizeXs }
-							disabled={ equalWidthXs }
-							setAttributes={ setAttributes }
+							value={sizeXs}
+							disabled={equalWidthXs}
+							setAttributes={setAttributes}
 						/>
-						{ ! isCssGridEnabled() && (
+						{!isCssGridEnabled() && (
 							<CheckboxControl
-								label={ __(
-									'Xs equal-width',
-									'wp-bootstrap-blocks'
-								) }
-								checked={ equalWidthXs }
-								onChange={ ( isChecked ) =>
-									setAttributes( { equalWidthXs: isChecked } )
+								label={__(
+									"Xs equal-width",
+									"wp-bootstrap-blocks"
+								)}
+								checked={equalWidthXs}
+								onChange={(isChecked) =>
+									setAttributes({ equalWidthXs: isChecked })
 								}
 							/>
-						) }
+						)}
 						<hr />
 						<ColumnSizeRangeControl
-							label={ __(
-								'Sm Column count',
-								'wp-bootstrap-blocks'
-							) }
+							label={__("Sm Column count", "wp-bootstrap-blocks")}
 							attributeName="sizeSm"
-							value={ sizeSm }
-							disabled={ equalWidthSm }
-							setAttributes={ setAttributes }
+							value={sizeSm}
+							disabled={equalWidthSm}
+							setAttributes={setAttributes}
 						/>
-						{ ! isCssGridEnabled() && (
+						{!isCssGridEnabled() && (
 							<CheckboxControl
-								label={ __(
-									'Sm equal-width',
-									'wp-bootstrap-blocks'
-								) }
-								checked={ equalWidthSm }
-								onChange={ ( isChecked ) =>
-									setAttributes( { equalWidthSm: isChecked } )
+								label={__(
+									"Sm equal-width",
+									"wp-bootstrap-blocks"
+								)}
+								checked={equalWidthSm}
+								onChange={(isChecked) =>
+									setAttributes({ equalWidthSm: isChecked })
 								}
 							/>
-						) }
+						)}
 						<hr />
 						<ColumnSizeRangeControl
-							label={ __(
-								'Md Column count',
-								'wp-bootstrap-blocks'
-							) }
+							label={__("Md Column count", "wp-bootstrap-blocks")}
 							attributeName="sizeMd"
-							value={ sizeMd }
-							disabled={ equalWidthMd }
-							setAttributes={ setAttributes }
+							value={sizeMd}
+							disabled={equalWidthMd}
+							setAttributes={setAttributes}
 						/>
-						{ ! isCssGridEnabled() && (
+						{!isCssGridEnabled() && (
 							<CheckboxControl
-								label={ __(
-									'Md equal-width',
-									'wp-bootstrap-blocks'
-								) }
-								checked={ equalWidthMd }
-								onChange={ ( isChecked ) =>
-									setAttributes( { equalWidthMd: isChecked } )
+								label={__(
+									"Md equal-width",
+									"wp-bootstrap-blocks"
+								)}
+								checked={equalWidthMd}
+								onChange={(isChecked) =>
+									setAttributes({ equalWidthMd: isChecked })
 								}
 							/>
-						) }
+						)}
 						<hr />
 						<ColumnSizeRangeControl
-							label={ __(
-								'Lg Column count',
-								'wp-bootstrap-blocks'
-							) }
+							label={__("Lg Column count", "wp-bootstrap-blocks")}
 							attributeName="sizeLg"
-							value={ sizeLg }
-							disabled={ equalWidthLg }
-							setAttributes={ setAttributes }
+							value={sizeLg}
+							disabled={equalWidthLg}
+							setAttributes={setAttributes}
 						/>
-						{ ! isCssGridEnabled() && (
+						{!isCssGridEnabled() && (
 							<CheckboxControl
-								label={ __(
-									'Lg equal-width',
-									'wp-bootstrap-blocks'
-								) }
-								checked={ equalWidthLg }
-								onChange={ ( isChecked ) =>
-									setAttributes( { equalWidthLg: isChecked } )
+								label={__(
+									"Lg equal-width",
+									"wp-bootstrap-blocks"
+								)}
+								checked={equalWidthLg}
+								onChange={(isChecked) =>
+									setAttributes({ equalWidthLg: isChecked })
 								}
 							/>
-						) }
+						)}
 						<hr />
 						<ColumnSizeRangeControl
-							label={ __(
-								'Xl Column count',
-								'wp-bootstrap-blocks'
-							) }
+							label={__("Xl Column count", "wp-bootstrap-blocks")}
 							attributeName="sizeXl"
-							value={ sizeXl }
-							disabled={ equalWidthXl }
-							setAttributes={ setAttributes }
+							value={sizeXl}
+							disabled={equalWidthXl}
+							setAttributes={setAttributes}
 						/>
-						{ ! isCssGridEnabled() && (
+						{!isCssGridEnabled() && (
 							<CheckboxControl
-								label={ __(
-									'Xl equal-width',
-									'wp-bootstrap-blocks'
-								) }
-								checked={ equalWidthXl }
-								onChange={ ( isChecked ) =>
-									setAttributes( { equalWidthXl: isChecked } )
+								label={__(
+									"Xl equal-width",
+									"wp-bootstrap-blocks"
+								)}
+								checked={equalWidthXl}
+								onChange={(isChecked) =>
+									setAttributes({ equalWidthXl: isChecked })
 								}
 							/>
-						) }
-						{ isBootstrap5Active() && (
+						)}
+						{isBootstrap5Active() && (
 							<Fragment>
 								<hr />
 								<ColumnSizeRangeControl
-									label={ __(
-										'Xxl Column count',
-										'wp-bootstrap-blocks'
-									) }
+									label={__(
+										"Xxl Column count",
+										"wp-bootstrap-blocks"
+									)}
 									attributeName="sizeXxl"
-									value={ sizeXxl }
-									disabled={ equalWidthXxl }
-									setAttributes={ setAttributes }
+									value={sizeXxl}
+									disabled={equalWidthXxl}
+									setAttributes={setAttributes}
 								/>
-								{ ! isCssGridEnabled() && (
+								{!isCssGridEnabled() && (
 									<CheckboxControl
-										label={ __(
-											'Xxl equal-width',
-											'wp-bootstrap-blocks'
-										) }
-										checked={ equalWidthXxl }
-										onChange={ ( isChecked ) =>
-											setAttributes( {
+										label={__(
+											"Xxl equal-width",
+											"wp-bootstrap-blocks"
+										)}
+										checked={equalWidthXxl}
+										onChange={(isChecked) =>
+											setAttributes({
 												equalWidthXxl: isChecked,
-											} )
+											})
 										}
 									/>
-								) }
+								)}
 							</Fragment>
-						) }
+						)}
 					</PanelBody>
 					<PanelBody
-						title={ __(
-							'Background color',
-							'wp-bootstrap-blocks'
-						) }
-						initialOpen={ false }
+						title={__("Background color", "wp-bootstrap-blocks")}
+						initialOpen={false}
 					>
 						<ColorPalette
-							colors={ bgColorOptions }
-							value={ bgColor }
-							onChange={ ( value ) => {
+							colors={bgColorOptions}
+							value={bgColor}
+							onChange={(value) => {
 								// Value is undefined if color gets cleared
-								if ( ! value ) {
-									setAttributes( {
-										bgColor: '',
+								if (!value) {
+									setAttributes({
+										bgColor: "",
 										centerContent: false,
-									} );
+									});
 								} else {
 									const selectedColor = bgColorOptions.find(
-										( c ) => c.color === value
+										(c) => c.color === value
 									);
-									if ( selectedColor ) {
-										setAttributes( {
+									if (selectedColor) {
+										setAttributes({
 											bgColor: selectedColor.name,
-										} );
+										});
 									}
 								}
-							} }
+							}}
 							disableCustomColors
 						/>
 					</PanelBody>
 					<PanelBody
-						title={ __(
-							'Padding (inside column)',
-							'wp-bootstrap-blocks'
-						) }
-						initialOpen={ false }
+						title={__(
+							"Padding (inside column)",
+							"wp-bootstrap-blocks"
+						)}
+						initialOpen={false}
 					>
 						<SelectControl
-							label={ __( 'Size', 'wp-bootstrap-blocks' ) }
-							value={ padding }
-							options={ paddingOptions }
-							onChange={ ( value ) => {
-								setAttributes( {
+							label={__("Size", "wp-bootstrap-blocks")}
+							value={padding}
+							options={paddingOptions}
+							onChange={(value) => {
+								setAttributes({
 									padding: value,
-								} );
-							} }
+								});
+							}}
 						/>
 					</PanelBody>
 				</InspectorControls>
 				<BlockControls>
 					<AlignmentToolbar
-						value={ contentVerticalAlignment }
-						label={ __(
-							'Change vertical alignment of content',
-							'wp-bootstrap-blocks'
-						) }
-						onChange={ ( newContentVerticalAlignment ) =>
-							setAttributes( {
+						value={contentVerticalAlignment}
+						label={__(
+							"Change vertical alignment of content",
+							"wp-bootstrap-blocks"
+						)}
+						onChange={(newContentVerticalAlignment) =>
+							setAttributes({
 								contentVerticalAlignment: newContentVerticalAlignment,
-							} )
+							})
 						}
-						alignmentControls={ contentVerticalAlignmentControls }
+						alignmentControls={contentVerticalAlignmentControls}
 					/>
 				</BlockControls>
-				<div className={ className }>
+				<div className={className}>
 					<InnerBlocks
-						templateLock={ false }
+						templateLock={false}
 						renderAppender={
 							hasChildBlocks
 								? undefined
@@ -355,13 +337,13 @@ class BootstrapColumnEdit extends Component {
 }
 
 export default compose(
-	withSelect( ( select, ownProps ) => {
+	withSelect((select, ownProps) => {
 		const { clientId } = ownProps;
 		const { getBlockOrder } =
-			select( 'core/block-editor' ) || select( 'core/editor' ); // Fallback to 'core/editor' for backwards compatibility
+			select("core/block-editor") || select("core/editor"); // Fallback to 'core/editor' for backwards compatibility
 
 		return {
-			hasChildBlocks: getBlockOrder( clientId ).length > 0,
+			hasChildBlocks: getBlockOrder(clientId).length > 0,
 		};
-	} )
-)( BootstrapColumnEdit );
+	})
+)(BootstrapColumnEdit);
